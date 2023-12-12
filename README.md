@@ -8,8 +8,8 @@ This is a text-based Sudoku solver program implemented in Rust. It uses the back
 
 Solves Sudoku puzzles of varying difficulty levels.
 Simple and intuitive command-line interface.
-Getting Started
 
+## Getting Started
 ### Prerequisites
 
 - [Rust](https://www.rust-lang.org/)
