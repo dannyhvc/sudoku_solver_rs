@@ -1,92 +1,62 @@
-# Sudoku Solver (Rust)
+# Sudoku Solver RS
 
 ## Overview
 
-This is a text-based Sudoku solver program implemented in Rust. It uses the backtracking algorithm to find the solution to any given Sudoku board.
+The `sudoku_solver_rs` is a comprehensive library for Sudoku puzzles. It originated from the initial version of a Sudoku solving program and has evolved to offer functionalities to solve and generate Sudoku puzzles. The library will soon be able to extract difficulty data from a Sudoku, opening up opportunities for its implementation across various applications.
 
 ## Features
 
-Solves Sudoku puzzles of varying difficulty levels.
-Simple and intuitive command-line interface.
+- **Sudoku Solving**: Solve any valid Sudoku puzzle.
+- **Sudoku Generation**: Generate new Sudoku puzzles.
+- **Difficulty Extraction** (Coming Soon): Extract difficulty data from a Sudoku puzzle.
 
-## Getting Started
-### Prerequisites
+## Installation
 
-- [Rust](https://www.rust-lang.org/)
+Extract the repository to your chosen directory.
+Add this to your `Cargo.toml`:
 
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/dannyhvc/sudoku_solver_rs.git
+```toml
+[dependencies]
+sudoku_solver_rs = { path="../path/to/sudoku_solver_rs" }
 ```
 
-2. Navigate to the project directory:
+Then import it in your project:
 
-```bash
-cd sudoku_solver_rs
-```
-
-3. Build the project:
-
-```bash
-cargo build --release
+```rust
+use sudoku_solver_rs;
 ```
 
 ## Usage
-1. Run the program:
 
-```bash
-./target/release/sudoku_solver_rs
-```
+Here's a simple example of how to use the library:
 
-2. Enter the Sudoku puzzle:
-
-* Input the Sudoku board row by row, using '0' to represent empty cells.
-
-* Example input:
 ```rust
-    let input: Board = vec![
-        vec![0, 2, 3, 4, 5, 6, 7, 8, 9],
-        vec![4, 0, 6, 7, 8, 9, 1, 2, 3],
-        vec![7, 8, 0, 1, 2, 3, 4, 5, 6],
-        vec![2, 3, 4, 0, 6, 7, 8, 9, 1],
-        vec![5, 6, 7, 8, 0, 1, 2, 3, 4],
-        vec![8, 9, 1, 2, 3, 0, 5, 6, 7],
-        vec![3, 4, 5, 6, 7, 8, 0, 1, 2],
-        vec![6, 7, 8, 9, 1, 2, 3, 0, 5],
-        vec![9, 1, 2, 3, 4, 5, 6, 7, 0],
-    ];
+// Sample Program:
+use sudoku_solver_rs::{
+    generator::{SudokuGenerator, SudokuSolver},
+    settings::Difficulty,
+    Board,
+};
+
+fn main() {
+    let mut board: Board = Board::generate_unsolved_sudoku(Default::default());
+
+    println!("Unsolved board\n");
+    board.print_board();
+
+    // if solved it will display the solved board
+    if board.solve() {
+        println!("Solved board\n");
+        board.print_board();
+    }
+}
 ```
-3. View the solution:
-* The program will output the solved Sudoku board.
+
+## Contributing
+
+Contributions are welcome! Please read our [contributing guidelines](LINK_TO_GUIDELINES) for details.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
-Inspired by the joy of solving Sudoku puzzles.
-Thanks to the Rust programming language and its community.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-### Error Hypothesis
-Heres what I think is happening and why I think its not solving the current
-sudoku. It errors because there is a dup, but then doesn't change it because
-the dup is clearly `0` every time and the system doesn't seem to check for
-that branching case.
-
-### Solution Hypothesis:
-Probably look into solving the error case and perhaps better error logging
-when in debug mode. Also, it might be worth investing in using color_eyre
-so that context can be added when an error is thrown.
-
-### Trial logs:
-1) so i tried filtering the 0s from the validation checking but it seems
-like it only ended up solving for the subgrid and and for the row or col
-
-2) Good news, found out through some better investigation that even if there
-are sudoku boards with less than 17 clues than the board has multiple solutions
-in terms of either it has multiple solutions or it has none. Although giving
-more hints seems like the right thing to do, if not thought out carefully it
-can give 0 solutions. Often anything more than 20 hints gives only 1 solution, but
-anything less than 17 gives unknown number of solutions within 1..=9**81
