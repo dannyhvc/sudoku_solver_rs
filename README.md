@@ -52,9 +52,9 @@ fn main() {
 }
 ```
 
-## Contributing
+<!-- ## Contributing
 
-Contributions are welcome! Please read our [contributing guidelines](LINK_TO_GUIDELINES) for details.
+Contributions are welcome! Please read our [contributing guidelines](LINK_TO_GUIDELINES) for details. -->
 
 ## License
 
