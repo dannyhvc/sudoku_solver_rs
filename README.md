@@ -68,3 +68,25 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 Inspired by the joy of solving Sudoku puzzles.
 Thanks to the Rust programming language and its community.
+
+### Error Hypothesis
+Heres what I think is happening and why I think its not solving the current
+sudoku. It errors because there is a dup, but then doesn't change it because
+the dup is clearly `0` every time and the system doesn't seem to check for
+that branching case.
+
+### Solution Hypothesis:
+Probably look into solving the error case and perhaps better error logging
+when in debug mode. Also, it might be worth investing in using color_eyre
+so that context can be added when an error is thrown.
+
+### Trial logs:
+1) so i tried filtering the 0s from the validation checking but it seems
+like it only ended up solving for the subgrid and and for the row or col
+
+2) Good news, found out through some better investigation that even if there
+are sudoku boards with less than 17 clues than the board has multiple solutions
+in terms of either it has multiple solutions or it has none. Although giving
+more hints seems like the right thing to do, if not thought out carefully it
+can give 0 solutions. Often anything more than 20 hints gives only 1 solution, but
+anything less than 17 gives unknown number of solutions within 1..=9**81
